@@ -1,6 +1,59 @@
 {% schema %}
-  {
-    "name": "Section name",
-    "settings": []
-  }
+{
+  "name": "Video Banner",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "url",
+      "id": "video_url",
+      "label": "Video File URL",
+      "info": "Upload your video in Settings > Files and paste the URL here."
+    },
+    {
+      "type": "text",
+      "id": "alt_text",
+      "label": "Alt text for video"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Autoplay",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Loop",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "muted",
+      "label": "Muted",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Video Banner"
+    }
+  ]
+}
 {% endschema %}
+
+<div class="video-banner" style="position: relative; overflow: hidden;">
+  {% if section.settings.video_url != blank %}
+    <video
+      src="{{ section.settings.video_url }}"
+      {% if section.settings.autoplay %}autoplay{% endif %}
+      {% if section.settings.loop %}loop{% endif %}
+      {% if section.settings.muted %}muted{% endif %}
+      playsinline
+      style="width: 100%; height: auto; display: block;"
+      alt="{{ section.settings.alt_text }}"
+    >
+    </video>
+  {% else %}
+    <p style="text-align: center;">No video set. Please provide a video URL in section settings.</p>
+  {% endif %}
+</div>
